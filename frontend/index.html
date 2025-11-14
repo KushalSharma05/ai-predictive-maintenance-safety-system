@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Predictive Maintenance & Safety Dashboard</title>
+</head>
+<body>
+    <h1>Factory Monitoring Dashboard</h1>
+
+    <h2>Predictive Maintenance</h2>
+    <form>
+        Temperature: <input id="temp"><br>
+        Vibration: <input id="vib"><br>
+        Pressure: <input id="pres"><br>
+        <button type="button" onclick="predict()">Predict</button>
+    </form>
+
+    <p id="result"></p>
+
+    <script>
+        function predict() {
+            let t = document.getElementById("temp").value;
+            let v = document.getElementById("vib").value;
+            let p = document.getElementById("pres").value;
+
+            fetch(`/predict-maintenance?temp=${t}&vibration=${v}&pressure=${p}`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("result").innerText =
+                        "Predicted Hours to Failure: " + data.predicted_time_to_failure;
+                });
+        }
+    </script>
+</body>
+</html>
